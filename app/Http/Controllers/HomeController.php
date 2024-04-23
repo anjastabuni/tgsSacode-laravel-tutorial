@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Dotenv\Validator;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Contracts\Service\Attribute\Required;
+// use Illuminate\Support\Facades\Validator
 
 class HomeController extends Controller
 {
@@ -29,7 +31,7 @@ class HomeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'nama' => 'required',
+            'name' => 'required',
             'password' => 'required',
         ]);
 
@@ -38,10 +40,39 @@ class HomeController extends Controller
         }
 
         $data['email'] = $request->email;
-        $data['name'] = $request->nama;
+        $data['name'] = $request->name;
         $data['password'] = Hash::make($request->password);
 
-        User::created($data);
+        User::create($data);
+        return redirect()->route('index');
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $data = User::find($id);
+        return view("edit", compact("data"));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'name' => 'required',
+            'password' => 'nullable',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
+
+        $data['email'] = $request->email;
+        $data['name'] = $request->name;
+
+        if ($request->password) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        User::whereId($id)->update($data);
         return redirect()->route('index');
     }
 }

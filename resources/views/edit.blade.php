@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Tambah User</li>
+                        <li class="breadcrumb-item active">Edit User</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -21,15 +21,16 @@
 
     <section class="content">
         <div class="container-fluid">
-            <form action="{{route('user.store')}}" method="POST">
+            <form action="{{ route('user.update', ['id' => $data->id]) }}" method="POST">
                 @csrf
+                @method('put')
                 <div class="row">
                     <!-- left column -->
                     <div class="col-md-6">
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Form Tambah User</h3>
+                                <h3 class="card-title">Form Edit User</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -37,14 +38,14 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Email</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter email">
+                                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{ $data->email }}" name="email" placeholder="Enter email">
                                         @error('email')
                                         <small>{{$message}}</small>
                                         @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Nama</label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" name="name" placeholder="Enter nama">
+                                        <input type="text" class="form-control" id="exampleInputEmail1" value="{{ $data->name }}" name="name" placeholder="Enter nama">
                                         @error('name')
                                         <small>{{$message}}</small>
                                         @enderror
