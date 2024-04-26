@@ -25,7 +25,7 @@
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-12">
-                    <a href="{{route('user.create')}}" class="btn btn-primary mb-3">Tambah Data</a>
+                    <a href="{{route('admin.user.create')}}" class="btn btn-primary mb-3">Tambah Data</a>
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Responsive Hover Table</h3>
@@ -60,7 +60,7 @@
                                         <td>{{$d->name}}</td>
                                         <td>{{$d->email}}</td>
                                         <td>
-                                            <a href="{{ route('user.edit', ['id' => $d->id]) }}" class="btn btn-primary"><i class="fas fa-pen"></i> Edit</a>
+                                            <a href="{{ route('admin.user.edit', ['id' => $d->id]) }}" class="btn btn-primary"><i class="fas fa-pen"></i> Edit</a>
                                             <a data-toggle="modal" data-target="#modal-hapus{{ $d->id}}" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Hapus</a>
                                         </td>
                                     </tr>
@@ -77,7 +77,7 @@
                                                     <p>Apakah anda yakin ingin menghapus data <b>{{ $d->name }}</b> </p>
                                                 </div>
                                                 <div class="modal-footer justify-content-between">
-                                                    <form action="{{ route('user.delete', ['id' => $d->id]) }}" method="post">
+                                                    <form action="{{ route('admin.user.delete', ['id' => $d->id]) }}" method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
